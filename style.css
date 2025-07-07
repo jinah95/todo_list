@@ -1,0 +1,46 @@
+body {
+    max-width: 400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10rem 0;
+}
+
+
+#todo-input {
+    width: 100%;
+}
+
+#todo-list {
+    width: 100%;
+}
+
+form {
+    width: 100%;
+    height: 35px;
+    display: grid;
+    grid-template-columns: 80% 20%;
+    gap: 5px;
+}
+
+li {
+    display: flex;
+    justify-content: space-between;
+}
+
+li:hover {
+    cursor: pointer;
+}
+
+.todo-done {
+    text-decoration: line-through;
+    color: gainsboro;
+}
+
+.todo-done button {
+    cursor:none;
+    pointer-events: none;
+    opacity: 0.5;
+}

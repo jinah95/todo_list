@@ -32,7 +32,12 @@ function App() {
       this.setState(delArray)
     }
 
-    this.todoList = new TodoList(this.$todoList, this.data, deleteHandler)
+    const doneDoingHandler = (targetIdx) => {
+      const newArr = [...this.data].map((item, i) => i === targetIdx ? {...item, isCompleted : !item.isCompleted} : item);
+      this.setState(newArr);
+    }
+
+    this.todoList = new TodoList(this.$todoList, this.data, deleteHandler, doneDoingHandler)
   }
 
   this.init()
