@@ -8,19 +8,31 @@ function App() {
   this.$todoList = document.querySelector('#todo-list')
   this.$todoInput = document.querySelector("#todo-input")
 
+  const DATA_KEY = "todo-data";
+
   this.setState = (newData) => { 
-    this.data = newData
-    this.todoList = new TodoList(this.$todoList, this.data)
+    this.data = newData;
+    localStorage.setItem(DATA_KEY, JSON.stringify(this.data))
+
+    this.todoList.setData(this.data);
+    this.todoList.render();
   }
 
   this.init = () => {
-    this.data = model
+    const savedData = localStorage.getItem(DATA_KEY);
+    this.data = savedData ? JSON.parse(savedData) : model
 
     new TodoInput(this.$todoInput, (newTodo) => {
       const newTodoText = { name: newTodo, isCompleted : false }
       this.setState([...this.data, newTodoText])
     })
-    this.todoList = new TodoList(this.$todoList, this.data)
+
+    const deleteHandler = (targetIdx) => {
+      const delArray = [...this.data].filter((item, i) => i !== targetIdx);
+      this.setState(delArray)
+    }
+
+    this.todoList = new TodoList(this.$todoList, this.data, deleteHandler)
   }
 
   this.init()
