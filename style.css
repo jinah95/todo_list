@@ -25,6 +25,11 @@ form {
     gap: 5px;
 }
 
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
 li {
     display: flex;
     justify-content: space-between;
@@ -34,13 +39,18 @@ li:hover {
     cursor: pointer;
 }
 
+input[type="checkbox"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 .todo-done {
     text-decoration: line-through;
     color: gainsboro;
 }
 
 .todo-done button {
-    cursor:none;
+    cursor: none;
     pointer-events: none;
     opacity: 0.5;
 }
