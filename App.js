@@ -1,5 +1,6 @@
 import TodoList from './components/TodoList.js'
 import TodoInput from './components/TodoInput.js'
+import TodoAll from './components/TodoAll.js'
 import { model } from './model/model.js'
 
 function App() {
@@ -7,15 +8,20 @@ function App() {
   this.todoList = null
   this.$todoList = document.querySelector('#todo-list')
   this.$todoInput = document.querySelector("#todo-input")
+  this.$todoTop = document.querySelector("#todo-nav-bar")
 
   const DATA_KEY = "todo-data";
 
-  this.setState = (newData) => {
+  this.setState = (newData, type="") => {
     this.data = newData;
     localStorage.setItem(DATA_KEY, JSON.stringify(this.data))
 
     this.todoList.setData(this.data);
     this.todoList.render();
+
+    if (this.$todoTop && typeof this.$todoTop.updateTodoInfo === 'function' && type === "isDoningDone") {
+      this.$todoTop.updateTodoInfo(this.data);
+    }
   }
 
   this.init = () => {
@@ -34,7 +40,7 @@ function App() {
 
     const doneDoingHandler = (targetIdx) => {
       const newArr = [...this.data].map((item, i) => i === targetIdx ? { ...item, isCompleted: !item.isCompleted } : item);
-      this.setState(newArr);
+      this.setState(newArr,"isDoningDone");
     }
 
     const checkHandler = (targetIdx) => {
@@ -55,6 +61,8 @@ function App() {
     }
 
     this.todoList = new TodoList(this.$todoList, this.data, actions)
+    
+    this.$todoTop = new TodoAll(this.$todoTop, this.data);
   }
 
   this.init()

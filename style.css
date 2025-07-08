@@ -9,11 +9,7 @@ body {
 }
 
 
-#todo-input {
-    width: 100%;
-}
-
-#todo-list {
+#todo-input, #todo-list, #todo-nav-bar {
     width: 100%;
 }
 
@@ -53,4 +49,20 @@ input[type="checkbox"]:disabled {
     cursor: none;
     pointer-events: none;
     opacity: 0.5;
+}
+
+#todo-nav-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#top-todo-info {
+    text-align: right;
+    font-weight: bold;
+}
+
+#top-nav-bar {
+    display: flex;
+    justify-content: space-between;
 }
