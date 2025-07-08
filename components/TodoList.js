@@ -11,7 +11,7 @@ function TodoList($container, data, actions) {
   this.render = function () {
     this.$container.innerHTML = `<ul>${this.data
       .map((todo, i) => `<li class=${todo.isCompleted ? "todo-done" : "todo-ing"} data-index=${i}><input type="checkbox" data-index=${i} name=${`check-${i}`} ${todo.isChecked ? "checked" : ""} />
-      ${todo.isEditing ? `<input class="edit-input" type="text" name=${`edit-name-${i}`} data-index=${i} value=${todo.name} /><button name="edit-complete" data-index=${i}>완료</button><button name="edit-cancled" data-index=${i}>취소</button>` : `${todo.name}${!todo.isCompleted ? `<button class="edit-button" name="edit-button" data-index=${i} >${todo.isEditing ? "완료" : "수정"}</button>`:''}`}<button class="delete-button" name="delete-button" data-index=${i} type="button">X</button></li>`)
+      ${todo.isEditing ? `<input class="edit-input" type="text" name=${`edit-name-${i}`} data-index=${i} value="${todo.name}" /><button name="edit-complete" data-index=${i}>완료</button><button name="edit-cancled" data-index=${i}>취소</button>` : `${todo.name}${!todo.isCompleted ? `<button class="edit-button" name="edit-button" data-index=${i} >${todo.isEditing ? "완료" : "수정"}</button>`:''}`}<button class="delete-button" name="delete-button" data-index=${i} type="button">X</button></li>`)
       .join('')} </ul>`
 
     // 삭제 & 수정 (수정 완료 / 취소 / 수정 하기)

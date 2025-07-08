@@ -1,13 +1,13 @@
-function TodoAll($container, data) {
+function TodoAll($container, data, actions) {
 
     const $topBar = document.createElement('div');
     $topBar.id = 'top-nav-bar'
 
     $topBar.innerHTML = `
-    <input type="checkbox" name="all-check" />
+    <input type="checkbox" name="all-check" id="all-check" />
     <div>
-        <button>완료</button>
-        <button>삭제</button>
+        <button id="all-done">완료</button>
+        <button id="all-delete">삭제</button>
     </div>
   `
 
@@ -27,6 +27,22 @@ function TodoAll($container, data) {
     }
 
     updateTodoInfo(data);
+
+    const $allCheckInput = $topBar.querySelector('#all-check');
+    $allCheckInput.addEventListener('click', (e) => {
+        const isChecked = e.target.checked;
+        actions.checkHandler(Infinity, isChecked);
+    });
+
+    const $allDoneButton = $topBar.querySelector('#all-done');
+    $allDoneButton.addEventListener('click', (e) => {
+        actions.doneDoingHandler(Infinity, true)
+    })
+
+    const $allDeleteButton = $topBar.querySelector('#all-delete');
+    $allDeleteButton.addEventListener('click', (e) => {
+        actions.deleteHandler(Infinity, true)
+    })
 
     $container.appendChild($todoInfo);
     $container.appendChild($topBar);

@@ -19,7 +19,7 @@ function App() {
     this.todoList.setData(this.data);
     this.todoList.render();
 
-    if (this.$todoTop && typeof this.$todoTop.updateTodoInfo === 'function' && type === "isDoningDone") {
+    if (this.$todoTop && typeof this.$todoTop.updateTodoInfo === 'function' && type === "isUpdate") {
       this.$todoTop.updateTodoInfo(this.data);
     }
   }
@@ -30,21 +30,21 @@ function App() {
 
     new TodoInput(this.$todoInput, (newTodo) => {
       const newTodoText = { name: newTodo, isCompleted: false, isChecked: false, isEditing: false }
-      this.setState([newTodoText, ...this.data])
+      this.setState([newTodoText, ...this.data], "isUpdate")
     })
 
-    const deleteHandler = (targetIdx) => {
-      const delArray = [...this.data].filter((item, i) => i !== targetIdx);
-      this.setState(delArray)
+    const deleteHandler = (targetIdx, all = false) => {
+      const delArray = [...this.data].filter((item, i) => all ? !item.isChecked : i !== targetIdx);
+      this.setState(delArray, "isUpdate")
     }
 
-    const doneDoingHandler = (targetIdx) => {
-      const newArr = [...this.data].map((item, i) => i === targetIdx ? { ...item, isCompleted: !item.isCompleted } : item);
-      this.setState(newArr,"isDoningDone");
+    const doneDoingHandler = (targetIdx, all = false) => {
+      const newArr = [...this.data].map((item, i) => i === targetIdx ? { ...item, isCompleted: !item.isCompleted } : item.isChecked ? { ...item, isCompleted: all } : item);
+      this.setState(newArr, "isUpdate");
     }
 
-    const checkHandler = (targetIdx) => {
-      const newArr = [...this.data].map((item, i) => i === targetIdx ? { ...item, isChecked: !item.isChecked } : item);
+    const checkHandler = (targetIdx, all = false) => {
+      const newArr = [...this.data].map((item, i) => i === targetIdx ? { ...item, isChecked: !item.isChecked } : targetIdx === Infinity ? { ...item, isChecked: all } : item);
       this.setState(newArr);
     }
 
@@ -62,7 +62,7 @@ function App() {
 
     this.todoList = new TodoList(this.$todoList, this.data, actions)
     
-    this.$todoTop = new TodoAll(this.$todoTop, this.data);
+    this.$todoTop = new TodoAll(this.$todoTop, this.data, actions);
   }
 
   this.init()
