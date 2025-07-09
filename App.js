@@ -39,7 +39,7 @@ function App() {
     }
 
     const doneDoingHandler = (targetIdx, all = false) => {
-      const newArr = [...this.data].map((item, i) => i === targetIdx ? { ...item, isCompleted: !item.isCompleted } : item.isChecked && !item.isEditing ? { ...item, isCompleted: all } : item);
+      const newArr = [...this.data].map((item, i) => i === targetIdx ? { ...item, isCompleted: !item.isCompleted } : targetIdx === Infinity && item.isChecked && !item.isEditing ? { ...item, isCompleted: all } : item);
       this.setState(newArr, "isUpdate");
     }
 

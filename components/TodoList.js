@@ -42,10 +42,10 @@ function TodoList($container, data, actions) {
     // 완료
     const todos = this.$container.querySelectorAll('input');
     todos.forEach((todo, i) => {
-      if (todo.name.includes("edit-name") && !this.data[i-1].isEditing) {
+      if (todo.name.includes("edit-name")) {
         todo.addEventListener('click', (e) => {
           const targetIdx = parseInt(e.target.dataset.index, 10);
-          actions.doneDoingHandler(targetIdx)
+          !this.data[targetIdx].isEditing && actions.doneDoingHandler(targetIdx)
         })
       }
     })
