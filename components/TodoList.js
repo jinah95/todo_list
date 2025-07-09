@@ -19,47 +19,30 @@ function TodoList($container, data, actions) {
       </li>`)
       .join('')} </ul>`
 
-    // 삭제 & 수정 (수정 완료 / 취소 / 수정 하기)
-    const buttons = this.$container.querySelectorAll('button');
-    buttons.forEach(button => {
-      button.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const targetIdx = parseInt(e.target.dataset.index, 10);
-        if (button.name === 'delete-button') {
-          actions.deleteHandler(targetIdx)
-        } else if (button.name === 'edit-button') {
-          actions.editHandler(targetIdx)
-        } else if (button.name === 'edit-cancled') {
-          actions.editHandler(targetIdx)
-        } else if (button.name === 'edit-complete') {
-          const editValue = this.$container.querySelectorAll(`[name="edit-name-${targetIdx}"]`)[0];
-          actions.editHandler(targetIdx, editValue.value)
+  
+   const $ul = this.$container.querySelector('ul');
+
+      // tag name 으로 click event 분기 (제거 / 편집 / 완료 / 체크박스)
+   $ul.addEventListener('click', (e) => {
+      const name = e.target.name;
+      const index = parseInt(e.target.dataset.index, 10);
+      if (isNaN(index)) return;
+
+      if (name === 'delete-button') {
+        actions.deleteHandler(index);
+      } else if (name === 'edit-button' || name === 'edit-cancled') {
+        actions.editHandler(index);
+      } else if (name === 'edit-complete') {
+        const editInput = this.$container.querySelector(`[name="edit-name-${index}"]`);
+        actions.editHandler(index, editInput.value);
+      } else if (name && name.startsWith('edit-name')) {
+        if (!this.data[index].isEditing) {
+          actions.doneDoingHandler(index);
         }
-      })
-    }
-    )
-
-    // 완료
-    const todos = this.$container.querySelectorAll('input');
-    todos.forEach((todo, i) => {
-      if (todo.name.includes("edit-name")) {
-        todo.addEventListener('click', (e) => {
-          const targetIdx = parseInt(e.target.dataset.index, 10);
-          !this.data[targetIdx].isEditing && actions.doneDoingHandler(targetIdx)
-        })
+      } else if (name && name.startsWith('check-')) {
+        actions.checkHandler(index);
       }
-    })
-
-    // 체크박스
-    const checks = this.$container.querySelectorAll('input');
-    checks.forEach(check => {
-      check.type === 'checkbox' &&
-        check.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const targetIdx = parseInt(e.target.dataset.index, 10);
-          actions.checkHandler(targetIdx)
-        })
-    })
+    });
 
   }
 
