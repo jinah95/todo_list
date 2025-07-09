@@ -11,9 +11,9 @@ function TodoList($container, data, actions) {
   this.render = function () {
     this.$container.innerHTML = `<ul>${this.data
       .map((todo, i) => `<li class=${todo.isCompleted ? "todo-done" : "todo-ing"} data-index=${i}><input type="checkbox" data-index=${i} name=${`check-${i}`} ${todo.isChecked ? "checked" : ""} />
-      ${todo.isEditing ? `<input class="edit-input" type="text" name=${`edit-name-${i}`} data-index=${i} value="${todo.name}" />` : `<span class="todo-name" data-index=${i}>${todo.name}</span>`} 
+      <input class="edit-input" type="text" name=${`edit-name-${i}`} data-index=${i} value="${todo.name}" ${todo.isEditing ? "" : "readonly"} /> 
       <div class="todo-item-buttons">
-      ${todo.isEditing ? `<button name="edit-complete" data-index=${i}>완료</button><button name="edit-cancled" data-index=${i}>취소</button>` : !todo.isCompleted ? `<button class="edit-button" name="edit-button" data-index=${i} >${todo.isEditing ? "완료" : "수정"}</button>`:''}
+      ${todo.isEditing ? `<button name="edit-complete" data-index=${i}>완료</button><button name="edit-cancled" data-index=${i}>취소</button>` : !todo.isCompleted ? `<button class="edit-button" name="edit-button" data-index=${i} >${todo.isEditing ? "완료" : "수정"}</button>` : ''}
       <button id="delete-button" name="delete-button" data-index=${i} type="button">X</button>
       </div>
       </li>`)
@@ -40,11 +40,9 @@ function TodoList($container, data, actions) {
     )
 
     // 완료
-    const todos = this.$container.querySelectorAll('span');
-    console.log(todos)
- 
+    const todos = this.$container.querySelectorAll('input');
     todos.forEach((todo, i) => {
-      if (!this.data[i].isEditing) {
+      if (todo.name.includes("edit-name") && !this.data[i-1].isEditing) {
         todo.addEventListener('click', (e) => {
           const targetIdx = parseInt(e.target.dataset.index, 10);
           actions.doneDoingHandler(targetIdx)

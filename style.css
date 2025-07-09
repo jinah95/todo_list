@@ -64,6 +64,14 @@ li span,
     white-space: normal;
 }
 
+.edit-input:read-only {
+    border: 0;
+    box-shadow: none;
+    outline: none;
+    cursor: pointer;
+}
+
+
 li button {
     width: 40px;
     height: 25px;
@@ -88,7 +96,7 @@ input[type="checkbox"]:disabled {
     opacity: 0.5;
 }
 
-.todo-done span {
+.todo-done input {
     text-decoration: line-through;
     color: gainsboro;
 }
