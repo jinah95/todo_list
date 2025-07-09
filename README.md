@@ -3,7 +3,7 @@
 
 ## 목차
 - [개요](#개요)
-- [구현 설명](#구현 설명)
+- [구현설명](#구현설명)
 
 
 ## 개요
@@ -14,7 +14,7 @@
 ![todo_app_img](https://github.com/user-attachments/assets/965106a5-bcac-47b1-a011-c320f04baff0)
 
 
-## 구현 설명 
+## 구현설명 
 - 기본 데이터 형태 : localstorage에 저장하여 새로고침 시에도 상태 유지 하도록 설정. 
    ㄴ 기본 데이터 타입 :{name : todo 내용, isCompleted : 완료여부, isChecked : 체크박스 체크 여부, isEditing : 편집 상태}
 - 구조 : APP.js (data 초기셋팅, 업데이트 / todo app 동작 함수), TodoList.js (TodoInput 에서 입력한 data 목록 구현 / ul-li / 각 수정, 삭제 등 버튼 추가), TodoInput.js (todo 항목을 입력 받는 컴포넌트), TodoAll.js (TodoList의 전체 선택 체크박스와 이에 따른 완료/삭제 일괄 처리 기능 / 완료, 전체 항목 카운트 view 추가)
